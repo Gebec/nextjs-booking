@@ -1,14 +1,23 @@
-import styled from 'styled-components'
-import { Heading } from '../src/components/LayoutComponents'
+import type { ICaravan, IResponseData } from './api/interfaces'
 
-const Home = () => {
+const Home = ({ data }: { data: IResponseData }) => {
   return (
-    <PageWrapper>
-      <Heading>Prague Labs testovací zadání</Heading>
-    </PageWrapper>
+    <div>
+      {data.items.map((item: ICaravan) => (
+        <div key={item.name}>{item.name}</div>
+      ))}
+    </div>
   )
 }
+export async function getStaticProps(): Promise<{ props: { data: IResponseData } }> {
+  const res = await fetch('http://localhost:3000/api/data')
+  const data: IResponseData = await res.json()
 
-const PageWrapper = styled.div``
+  return {
+    props: {
+      data
+    }
+  }
+}
 
 export default Home
