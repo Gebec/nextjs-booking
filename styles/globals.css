@@ -13,3 +13,20 @@ a {
 * {
   box-sizing: border-box;
 }
+
+:root {
+  /* COLORS */
+  --c-white: #ffffff;
+  --c-beige: #edeae3;
+  --c-dark-grey: #9c8c8c;
+  --c-dark-blue: #1f2244;
+  --c-orange: #ff5e55;
+  --c-green: #119383;
+  --c-grey: #1f224433;
+
+  /* SPACING */
+  --spacing-16: 1rem;
+
+  /* OTHERS */
+  --content-max-width: 77.5rem;
+}
