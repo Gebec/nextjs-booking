@@ -11,7 +11,7 @@ import ActionIcon from '../../public/assets/Icon-Action.svg'
 
 import type { ICaravan } from '../../pages/api/interfaces'
 
-export const Tile = function Card({ data }: { data: ICaravan }) {
+export const Tile = function Tile({ data }: { data: ICaravan }) {
   return (
     <TileWrapper>
       <ImageWrapper>

@@ -1,17 +1,31 @@
 import styled from 'styled-components'
 
-import { Tile } from '../src/components'
+import { InstantBookablePicker, PricePicker, Tile, VehicleTypePicker } from '../src/components'
+
+import { Container } from '../src/components/LayoutComponents'
 
 import type { ICaravan, IResponseData } from './api/interfaces'
 
 const Home = ({ data }: { data: IResponseData }) => {
   return (
-    <ResultsWrapper>
-      {data.items.map((item: ICaravan) => {
-        const key: string = item.pictures[0] || `${item.name}-${item.location}-${item.price}`
-        return <Tile key={key} data={item}></Tile>
-      })}
-    </ResultsWrapper>
+    <ContentWrapper>
+      <Container>
+        <Filters>
+          <PricePicker />
+          <VehicleTypePicker />
+          <InstantBookablePicker />
+        </Filters>
+      </Container>
+      <Container>
+        <ResultsWrapper>
+          {data.items.map((item: ICaravan) => {
+            const key: string = item.pictures[0] || `${item.name}-${item.location}-${item.price}`
+            return <Tile key={key} data={item}></Tile>
+          })}
+        </ResultsWrapper>
+      </Container>
+      <button>Načíst další</button>
+    </ContentWrapper>
   )
 }
 export async function getStaticProps(): Promise<{ props: { data: IResponseData } }> {
@@ -26,6 +40,11 @@ export async function getStaticProps(): Promise<{ props: { data: IResponseData }
   }
 }
 
+const ContentWrapper = styled.div`
+  & > * {
+    border-top: 1px solid var(--c-beige);
+  }
+`
 /*
   For more info about the grid styles: https://css-tricks.com/an-auto-filling-css-grid-with-max-columns/
 */
@@ -41,6 +60,22 @@ const ResultsWrapper = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
   grid-gap: var(--grid-layout-gap);
+
+  padding-top: var(--spacing-24);
+  padding-bottom: var(--spacing-24);
+`
+
+const Filters = styled.section`
+  display: flex;
+  height: 200px;
+
+  & > * {
+    width: 200px;
+  }
+
+  & > * + * {
+    border-left: 1px solid var(--c-beige);
+  }
 `
 
 export default Home
