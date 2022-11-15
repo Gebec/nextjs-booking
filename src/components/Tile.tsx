@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import Image from 'next/image'
 
+import { IconWithText, Text } from './_LayoutComponents'
 import { getVehicleTypeDetail } from '../utils/vehicle-type-detail'
 
 import SeatIcon from '../../public/assets/Icon-Seat.svg'
@@ -40,7 +41,7 @@ export const Tile = function Tile({ data }: { data: ICaravan }) {
         <HorizontalSeparator />
 
         <PriceWrapper>
-          <PriceText>Cena od</PriceText>
+          <Text>Cena od</Text>
           <PriceValue>
             {data.price} Kč/den
             {data.instantBookable ? <Image width={20} height={20} src={ActionIcon} alt="Can be instantly booked"></Image> : null}
@@ -104,13 +105,6 @@ const AttributesWrapper = styled.div`
   padding-bottom: var(--spacing-16);
 `
 
-const IconWithText = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: no-wrap;
-  gap: var(--spacing-4);
-`
-
 const PriceWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -118,9 +112,6 @@ const PriceWrapper = styled.div`
   padding-top: var(--spacing-12);
 `
 
-const PriceText = styled.div`
-  color: var(--c-dark-grey);
-`
 const PriceValue = styled.div`
   display: flex;
   align-items: center;

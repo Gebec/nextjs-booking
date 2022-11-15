@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Header from './Header'
 import Footer from './Footer'
 
-import { Container } from '../LayoutComponents'
+import { Container } from '../_LayoutComponents'
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

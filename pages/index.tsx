@@ -1,19 +1,30 @@
+import { useState } from 'react'
 import styled from 'styled-components'
+import type { SingleValue } from 'react-select'
 
 import { InstantBookablePicker, PricePicker, Tile, VehicleTypePicker } from '../src/components'
 
-import { Container } from '../src/components/LayoutComponents'
+import { Container } from '../src/components/_LayoutComponents'
 
 import type { ICaravan, IResponseData } from './api/interfaces'
+import type { IInstantBookable } from '../src/components/InstantBookablePicker'
 
 const Home = ({ data }: { data: IResponseData }) => {
+  const [instantBookable, setInstantBookable] = useState(false)
+
+  const instantBookableChanged = (selected: SingleValue<IInstantBookable>): void => {
+    if (selected) {
+      setInstantBookable(selected.value)
+    }
+  }
+
   return (
     <ContentWrapper>
       <Container>
         <Filters>
           <PricePicker />
           <VehicleTypePicker />
-          <InstantBookablePicker />
+          <InstantBookablePicker onChange={instantBookableChanged} />
         </Filters>
       </Container>
       <Container>
@@ -68,6 +79,9 @@ const ResultsWrapper = styled.section`
 const Filters = styled.section`
   display: flex;
   height: 200px;
+
+  margin-left: -var(--spacing-16);
+  margin-right: -var(--spacing-16);
 
   & > * {
     width: 200px;

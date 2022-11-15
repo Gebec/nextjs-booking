@@ -15,3 +15,15 @@ export const Container = styled.div`
     padding-right: var(--spacing-16);
   }
 `
+
+export const IconWithText = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: no-wrap;
+  gap: var(--spacing-4);
+`
+
+export const Text = styled.div`
+  font-size: 1rem;
+  color: var(--c-dark-grey);
+`
