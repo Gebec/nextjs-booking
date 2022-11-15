@@ -1,7 +1,23 @@
-import Document, { DocumentContext } from 'next/document'
+import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
+
 import { ServerStyleSheet } from 'styled-components'
 
 export default class MyDocument extends Document {
+  render() {
+    return (
+      <Html>
+        <Head>
+          <meta charSet="utf-8" />
+          <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
+  }
+
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
     const originalRenderPage = ctx.renderPage

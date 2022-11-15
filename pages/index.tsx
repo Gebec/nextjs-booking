@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import Head from 'next/head'
 import styled from 'styled-components'
-import type { SingleValue } from 'react-select'
 
 import { InstantBookablePicker, PricePicker, Tile, VehicleTypePicker } from '../src/components'
 
@@ -8,6 +8,7 @@ import { Container } from '../src/components/_LayoutComponents'
 
 import type { ICaravan, IResponseData } from './api/interfaces'
 import type { IInstantBookable } from '../src/components/InstantBookablePicker'
+import type { SingleValue } from 'react-select'
 
 const Home = ({ data }: { data: IResponseData }) => {
   const [instantBookable, setInstantBookable] = useState(false)
@@ -19,24 +20,29 @@ const Home = ({ data }: { data: IResponseData }) => {
   }
 
   return (
-    <ContentWrapper>
-      <Container>
-        <Filters>
-          <PricePicker />
-          <VehicleTypePicker />
-          <InstantBookablePicker onChange={instantBookableChanged} />
-        </Filters>
-      </Container>
-      <Container>
-        <ResultsWrapper>
-          {data.items.map((item: ICaravan) => {
-            const key: string = item.pictures[0] || `${item.name}-${item.location}-${item.price}`
-            return <Tile key={key} data={item}></Tile>
-          })}
-        </ResultsWrapper>
-      </Container>
-      <button>Načíst další</button>
-    </ContentWrapper>
+    <>
+      <Head>
+        <title>Karavany</title>
+      </Head>
+      <ContentWrapper>
+        <Container>
+          <Filters>
+            <PricePicker />
+            <VehicleTypePicker />
+            <InstantBookablePicker onChange={instantBookableChanged} />
+          </Filters>
+        </Container>
+        <Container>
+          <ResultsWrapper>
+            {data.items.map((item: ICaravan) => {
+              const key: string = item.pictures[0] || `${item.name}-${item.location}-${item.price}`
+              return <Tile key={key} data={item}></Tile>
+            })}
+          </ResultsWrapper>
+        </Container>
+        <button>Načíst další</button>
+      </ContentWrapper>
+    </>
   )
 }
 export async function getStaticProps(): Promise<{ props: { data: IResponseData } }> {
