@@ -1,26 +1,33 @@
 import type { TVehicleType } from '../../pages/api/interfaces'
 
-export const getVehicleTypeDetail = (type: TVehicleType): { name: string; description: string } => {
+export const vehicleTypeDetail: Record<TVehicleType, { name: string; description: string }> = {
+  Alcove: {
+    name: 'Přívěs',
+    description: 'Tažný karavan za vaše auto. Od kapkovitých až po rodinné.'
+  },
+  BuiltIn: {
+    name: 'Vestavba',
+    description: 'Celý byt geniálně poskládaný do dodávky.'
+  },
+  Campervan: {
+    name: 'Campervan',
+    description: 'Obytka s rozměry osobáku, se kterou dojedete všude.'
+  },
+  Intergrated: {
+    name: 'Integrál',
+    description: 'Král mezi karavany. Luxus na kolech.'
+  }
+}
+
+export const getVehicleTypeName = (type: TVehicleType): string => {
   switch (type) {
     case 'Alcove':
-      return {
-        name: 'Přívěs',
-        description: 'Tažný karavan za vaše auto. Od kapkovitých až po rodinné.'
-      }
+      return vehicleTypeDetail.Alcove.name
     case 'BuiltIn':
-      return {
-        name: 'Vestavba',
-        description: 'Celý byt geniálně poskládaný do dodávky.'
-      }
+      return vehicleTypeDetail.BuiltIn.name
     case 'Campervan':
-      return {
-        name: 'Campervan',
-        description: 'Obytka s rozměry osobáku, se kterou dojedete všude.'
-      }
+      return vehicleTypeDetail.Campervan.name
     case 'Intergrated':
-      return {
-        name: 'Integrál',
-        description: 'Král mezi karavany. Luxus na kolech.'
-      }
+      return vehicleTypeDetail.Intergrated.name
   }
 }

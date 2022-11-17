@@ -6,17 +6,29 @@ import { InstantBookablePicker, PricePicker, Tile, VehicleTypePicker } from '../
 
 import { Container } from '../src/components/_LayoutComponents'
 
-import type { ICaravan, IResponseData } from './api/interfaces'
+import type { ICaravan, IResponseData, TVehicleType } from './api/interfaces'
 import type { IInstantBookable } from '../src/components/InstantBookablePicker'
 import type { SingleValue } from 'react-select'
 
 const Home = ({ data }: { data: IResponseData }) => {
   const [instantBookable, setInstantBookable] = useState(false)
+  const [selectedTypes, setSelectedTypes] = useState<TVehicleType[]>([])
 
   const instantBookableChanged = (selected: SingleValue<IInstantBookable>): void => {
     if (selected) {
       setInstantBookable(selected.value)
     }
+  }
+
+  const toggleVehicleType = (name: TVehicleType): boolean => {
+    const index = selectedTypes.indexOf(name)
+
+    setSelectedTypes((types: TVehicleType[]) => {
+      index === -1 ? types.push(name) : types.splice(index)
+      return types
+    })
+
+    return index === -1
   }
 
   return (
@@ -28,7 +40,7 @@ const Home = ({ data }: { data: IResponseData }) => {
         <Container>
           <Filters>
             <PricePicker />
-            <VehicleTypePicker />
+            <VehicleTypePicker toggleVehicleType={toggleVehicleType} />
             <InstantBookablePicker onChange={instantBookableChanged} />
           </Filters>
         </Container>
@@ -84,13 +96,12 @@ const ResultsWrapper = styled.section`
 
 const Filters = styled.section`
   display: flex;
-  height: 200px;
 
-  margin-left: -var(--spacing-16);
-  margin-right: -var(--spacing-16);
+  margin-left: calc(-1 * var(--spacing-16));
+  margin-right: calc(-1 * var(--spacing-16));
 
   & > * {
-    width: 200px;
+    padding: var(--spacing-24) var(--spacing-16);
   }
 
   & > * + * {

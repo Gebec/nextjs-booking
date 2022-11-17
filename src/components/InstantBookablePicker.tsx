@@ -55,7 +55,6 @@ export const InstantBookablePicker = ({ onChange }: { onChange: (newValue: Singl
 }
 
 const Wrapper = styled.div`
-  padding: var(--spacing-24) var(--spacing-16);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-16);

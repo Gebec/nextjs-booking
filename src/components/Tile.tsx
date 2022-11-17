@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Image from 'next/image'
 
 import { IconWithText, Text } from './_LayoutComponents'
-import { getVehicleTypeDetail } from '../utils/vehicle-type-detail'
+import { getVehicleTypeName } from '../utils/vehicle-type-detail'
 
 import SeatIcon from '../../public/assets/Icon-Seat.svg'
 import BedIcon from '../../public/assets/Icon-Bed.svg'
@@ -19,7 +19,7 @@ export const Tile = function Tile({ data }: { data: ICaravan }) {
         <Image src={data.pictures[0]} alt="Image of caravan" layout="fill" objectFit="cover" unoptimized={true}></Image>
       </ImageWrapper>
       <ContentWrapper>
-        <VehicleType>{getVehicleTypeDetail(data.vehicleType).name}</VehicleType>
+        <VehicleType>{getVehicleTypeName(data.vehicleType)}</VehicleType>
         <VehicleName>{data.name}</VehicleName>
 
         <HorizontalSeparator />
