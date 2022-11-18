@@ -33,7 +33,7 @@ const Tile = styled.div<{ isActive: boolean }>`
   padding: var(--spacing-12);
   cursor: pointer;
 
-  ${(props: { isActive: boolean }) => (props.isActive ? `border: 2px solid var(--c-green)` : `border: 1px solid var(--c-beige)`)}
+  ${(props: { isActive: boolean }) => (props.isActive ? `outline: 2px solid var(--c-green)` : `outline: 1px solid var(--c-beige)`)}
 `
 const Name = styled.div`
   font-size: var(--fs-16);
