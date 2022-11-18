@@ -5,19 +5,25 @@ import styled from 'styled-components'
 import { IconWithText, Text } from './_LayoutComponents'
 import ActionIcon from '../../public/assets/Icon-Action.svg'
 
+import { EInstantBookable } from '../enums/instant-bookable.enum'
+
 export interface IInstantBookable {
-  value: boolean
+  value: EInstantBookable
   label: string
 }
 
 const selectOptions: IInstantBookable[] = [
   {
-    value: false,
-    label: 'Ne'
+    value: EInstantBookable.ALL,
+    label: 'Vše'
   },
   {
-    value: true,
+    value: EInstantBookable.YES,
     label: 'Ano'
+  },
+  {
+    value: EInstantBookable.NO,
+    label: 'Ne'
   }
 ]
 

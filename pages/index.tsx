@@ -7,13 +7,14 @@ import { InstantBookablePicker, PricePicker, Tile, VehicleTypePicker } from '../
 import { Container } from '../src/components/_LayoutComponents'
 
 import { EPricePicker } from '../src/enums/price-picker.enum'
+import { EInstantBookable } from '../src/enums/instant-bookable.enum'
 
 import type { ICaravan, IResponseData, TVehicleType } from './api/interfaces'
 import type { IInstantBookable } from '../src/components/InstantBookablePicker'
 import type { SingleValue } from 'react-select'
 
 const Home = ({ data }: { data: IResponseData }) => {
-  const [instantBookable, setInstantBookable] = useState(false)
+  const [instantBookable, setInstantBookable] = useState(EInstantBookable.ALL)
   const [selectedTypes, setSelectedTypes] = useState<TVehicleType[]>([])
   const [minPrice, setMinPrice] = useState(EPricePicker.MIN_VALUE)
   const [maxPrice, setMaxPrice] = useState(EPricePicker.MAX_VALUE)
