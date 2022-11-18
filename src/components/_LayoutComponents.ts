@@ -19,7 +19,7 @@ export const IconWithText = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
-  gap: var(--spacing-4);
+  gap: var(--spacing-8);
   width: max-content;
 `
 

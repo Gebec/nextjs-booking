@@ -1,5 +1,6 @@
-import { VehiclePickerTile } from './VehiclePickerTile'
 import styled from 'styled-components'
+
+import { VehiclePickerTile } from './VehiclePickerTile'
 
 import type { TVehicleType } from '../../pages/api/interfaces'
 
@@ -21,7 +22,7 @@ export const VehicleTypePicker = ({ toggleVehicleType }: TProps) => {
 
 const TypePickerWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
   grid-auto-flow: column;
   gap: var(--spacing-16);
 `

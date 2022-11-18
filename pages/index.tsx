@@ -6,6 +6,8 @@ import { InstantBookablePicker, PricePicker, Tile, VehicleTypePicker } from '../
 
 import { Container } from '../src/components/_LayoutComponents'
 
+import { EPricePicker } from '../src/enums/price-picker.enum'
+
 import type { ICaravan, IResponseData, TVehicleType } from './api/interfaces'
 import type { IInstantBookable } from '../src/components/InstantBookablePicker'
 import type { SingleValue } from 'react-select'
@@ -13,6 +15,8 @@ import type { SingleValue } from 'react-select'
 const Home = ({ data }: { data: IResponseData }) => {
   const [instantBookable, setInstantBookable] = useState(false)
   const [selectedTypes, setSelectedTypes] = useState<TVehicleType[]>([])
+  const [minPrice, setMinPrice] = useState(EPricePicker.MIN_VALUE)
+  const [maxPrice, setMaxPrice] = useState(EPricePicker.MAX_VALUE)
 
   const instantBookableChanged = (selected: SingleValue<IInstantBookable>): void => {
     if (selected) {
@@ -31,6 +35,32 @@ const Home = ({ data }: { data: IResponseData }) => {
     return index === -1
   }
 
+  const changeMinPrice = (value: number) => {
+    if (value <= EPricePicker.MIN_VALUE) {
+      setMinPrice(EPricePicker.MIN_VALUE)
+      return
+    }
+    if (value >= maxPrice) {
+      setMinPrice(maxPrice)
+      return
+    }
+
+    setMinPrice(value)
+  }
+
+  const changeMaxPrice = (value: number) => {
+    if (value <= minPrice) {
+      setMaxPrice(minPrice)
+      return
+    }
+    if (value >= EPricePicker.MAX_VALUE) {
+      setMaxPrice(EPricePicker.MAX_VALUE)
+      return
+    }
+
+    setMaxPrice(value)
+  }
+
   return (
     <>
       <Head>
@@ -39,7 +69,7 @@ const Home = ({ data }: { data: IResponseData }) => {
       <ContentWrapper>
         <Container>
           <Filters>
-            <PricePicker />
+            <PricePicker minPrice={minPrice} maxPrice={maxPrice} changeMinHandler={changeMinPrice} changeMaxHandler={changeMaxPrice} />
             <VehicleTypePicker toggleVehicleType={toggleVehicleType} />
             <InstantBookablePicker onChange={instantBookableChanged} />
           </Filters>
