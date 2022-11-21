@@ -1,3 +1,4 @@
+export * from './_head'
 export * from './layout'
 
 export { InstantBookablePicker } from './InstantBookablePicker'

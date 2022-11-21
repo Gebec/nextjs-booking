@@ -2,8 +2,7 @@ import { useState } from 'react'
 import Head from 'next/head'
 import styled from 'styled-components'
 
-import { InstantBookablePicker, PricePicker, Tile, VehicleTypePicker } from '../src/components'
-
+import { IndexHead, InstantBookablePicker, PricePicker, Tile, VehicleTypePicker } from '../src/components'
 import { Container } from '../src/components/_LayoutComponents'
 
 import { EPricePicker } from '../src/enums/price-picker.enum'
@@ -64,9 +63,7 @@ const Home = ({ data }: { data: IResponseData }) => {
 
   return (
     <>
-      <Head>
-        <title>Karavany</title>
-      </Head>
+      <IndexHead></IndexHead>
       <ContentWrapper>
         <Container>
           <Filters>
