@@ -1,5 +1,5 @@
 export * from './_head'
-export * from './layout'
+export * from './_layout'
 
 export { InstantBookablePicker } from './InstantBookablePicker'
 export { PricePicker } from './PricePicker'
