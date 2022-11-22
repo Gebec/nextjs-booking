@@ -7,18 +7,14 @@ import type { TVehicleType } from '../../pages/api/interfaces'
 
 const vehicleTypes: TVehicleType[] = ['Alcove', 'BuiltIn', 'Campervan', 'Intergrated']
 
-type TProps = {
-  toggleVehicleType(type: TVehicleType): boolean
-}
-
-export const VehicleTypePicker = ({ toggleVehicleType }: TProps) => {
+export const VehicleTypePicker = () => {
   return (
     <div>
       <Text>Cena za den</Text>
 
       <TypePickerWrapper>
         {vehicleTypes.map((type: TVehicleType): React.ReactElement => {
-          return <VehiclePickerTile key={type} type={type} toggleVehicleType={toggleVehicleType} />
+          return <VehiclePickerTile key={type} type={type} />
         })}
       </TypePickerWrapper>
     </div>

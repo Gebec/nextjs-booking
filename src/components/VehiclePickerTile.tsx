@@ -1,26 +1,42 @@
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { vehicleTypeDetail } from '../utils/vehicle-type-detail'
+import { useCaravansContext } from './_context'
 
 import type { TVehicleType } from '../../pages/api/interfaces'
 
-type TProps = { type: TVehicleType; toggleVehicleType(type: TVehicleType): boolean }
+type TProps = { type: TVehicleType }
 
-export const VehiclePickerTile = ({ type, toggleVehicleType }: TProps) => {
+export const VehiclePickerTile = ({ type }: TProps) => {
+  const { selectedTypes, setSelectedTypes } = useCaravansContext()
   const [isActive, setStatus] = useState(false)
-  const typeDetail: { name: string; description: string } = vehicleTypeDetail[type]
 
-  const handleOnClick = () => {
-    setStatus(toggleVehicleType(type))
-  }
+  const toggleVehicleType = useCallback((): void => {
+    const index = selectedTypes.indexOf(type)
 
-  return (
-    <Tile isActive={isActive} onClick={handleOnClick}>
-      <Name>{typeDetail.name}</Name>
-      <Description>{typeDetail.description}</Description>
-    </Tile>
-  )
+    if (index === -1) {
+      setSelectedTypes((types: TVehicleType[]) => {
+        return [...types, type]
+      })
+      setStatus(true)
+    } else {
+      setSelectedTypes((types: TVehicleType[]) => {
+        types.splice(index)
+        return [...types]
+      })
+      setStatus(false)
+    }
+  }, [selectedTypes, setSelectedTypes, type])
+
+  return useMemo(() => {
+    return (
+      <Tile isActive={isActive} onClick={toggleVehicleType}>
+        <Name>{vehicleTypeDetail[type].name}</Name>
+        <Description>{vehicleTypeDetail[type].description}</Description>
+      </Tile>
+    )
+  }, [type, toggleVehicleType, isActive])
 }
 
 const Tile = styled.div<{ isActive: boolean }>`

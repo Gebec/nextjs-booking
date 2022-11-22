@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import { IconWithText, Text } from './_LayoutComponents'
 import ActionIcon from '../../public/assets/Icon-Action.svg'
+import { useCaravansContext } from './_context/context'
 
 import { EInstantBookable } from '../enums/instant-bookable.enum'
 
@@ -27,7 +28,14 @@ const selectOptions: IInstantBookable[] = [
   }
 ]
 
-export const InstantBookablePicker = ({ onChange }: { onChange: (newValue: SingleValue<IInstantBookable>) => void }) => {
+export const InstantBookablePicker = () => {
+  const { setInstantBookable } = useCaravansContext()
+
+  const onChange = (selected: SingleValue<IInstantBookable>): void => {
+    if (selected) {
+      setInstantBookable(selected.value)
+    }
+  }
   return (
     <Wrapper>
       <IconWithText>

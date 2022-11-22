@@ -1,22 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { getTrackBackground, Range } from 'react-range'
 import styled from 'styled-components'
 
 import useDebounce from '../utils/hooks/useDebounce'
 import { Text } from './_LayoutComponents'
+import { useCaravansContext } from './_context/context'
 
 import { EPricePicker } from '../enums/price-picker.enum'
 
-type TProps = {
-  minPrice: number
-  maxPrice: number
-  changeMinHandler(value: number): void
-  changeMaxHandler(value: number): void
-}
-
-export const PricePicker = ({ minPrice, maxPrice, changeMinHandler, changeMaxHandler }: TProps) => {
-  const [minValue, setMinValue] = useState(minPrice)
-  const [maxValue, setMaxValue] = useState(maxPrice)
+export const PricePicker = () => {
+  const { minPrice, maxPrice, setMinPrice, setMaxPrice } = useCaravansContext()
+  const [minValue, setMinValue] = useState(EPricePicker.MIN_VALUE)
+  const [maxValue, setMaxValue] = useState(EPricePicker.MAX_VALUE)
 
   const trackStyles: React.CSSProperties = {
     width: '100%',
@@ -36,17 +31,17 @@ export const PricePicker = ({ minPrice, maxPrice, changeMinHandler, changeMaxHan
     borderRadius: '50%'
   }
 
-  useEffect(() => {
-    setMinValue(minPrice)
-  }, [minPrice])
-
-  useEffect(() => {
-    setMaxValue
-  }, [maxValue])
-
   useDebounce(
     () => {
-      changeMinHandler(minValue)
+      if (minValue <= EPricePicker.MIN_VALUE) {
+        setMinPrice(EPricePicker.MIN_VALUE)
+        setMinValue(EPricePicker.MIN_VALUE)
+      } else if (minValue >= maxPrice) {
+        setMinPrice(maxValue)
+        setMinValue(maxValue)
+      } else if (minPrice !== minValue) {
+        setMinPrice(minValue)
+      }
     },
     500,
     [minValue]
@@ -54,7 +49,15 @@ export const PricePicker = ({ minPrice, maxPrice, changeMinHandler, changeMaxHan
 
   useDebounce(
     () => {
-      changeMaxHandler(maxValue)
+      if (maxValue <= minPrice) {
+        setMaxPrice(minValue)
+        setMaxValue(minValue)
+      } else if (maxValue >= EPricePicker.MAX_VALUE) {
+        setMaxPrice(EPricePicker.MAX_VALUE)
+        setMaxValue(EPricePicker.MAX_VALUE)
+      } else if (maxPrice !== maxValue) {
+        setMaxPrice(maxValue)
+      }
     },
     500,
     [maxValue]
@@ -69,9 +72,9 @@ export const PricePicker = ({ minPrice, maxPrice, changeMinHandler, changeMaxHan
           min={EPricePicker.MIN_VALUE}
           max={EPricePicker.MAX_VALUE}
           values={[minValue, maxValue]}
-          onChange={(values) => {
-            setMinValue(values[0])
-            setMaxValue(values[1])
+          onChange={([min, max]) => {
+            setMinValue(min)
+            setMaxValue(max)
           }}
           renderTrack={({ props, children }) => (
             <div {...props} style={{ ...props.style, ...trackStyles }}>
@@ -86,8 +89,8 @@ export const PricePicker = ({ minPrice, maxPrice, changeMinHandler, changeMaxHan
           <Input
             id="min-price-input"
             type="number"
-            min={EPricePicker.MIN_VALUE}
-            max={maxPrice}
+            min={0}
+            max={EPricePicker.MAX_VALUE}
             value={minValue}
             onChange={(event) => setMinValue(Number(event.target.value))}
           />
@@ -97,7 +100,7 @@ export const PricePicker = ({ minPrice, maxPrice, changeMinHandler, changeMaxHan
           <Input
             id="max-price-input"
             type="number"
-            min={minPrice}
+            min={0}
             max={EPricePicker.MAX_VALUE}
             value={maxValue}
             onChange={(event) => setMinValue(Number(event.target.value))}
