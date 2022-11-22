@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import Image from 'next/image'
 
+import { TileCarousel } from './TileCarousel'
 import { IconWithText, Text } from './_LayoutComponents'
 import { getVehicleTypeName } from '../utils/vehicle-type-detail'
 
@@ -16,7 +17,7 @@ export const Tile = ({ data }: { data: ICaravan }) => {
   return (
     <TileWrapper>
       <ImageWrapper>
-        <Image src={data.pictures[0]} alt="Image of caravan" layout="fill" objectFit="cover" unoptimized={true}></Image>
+        <TileCarousel images={data.pictures} />
       </ImageWrapper>
       <ContentWrapper>
         <VehicleType>{getVehicleTypeName(data.vehicleType)}</VehicleType>
@@ -66,6 +67,8 @@ const ImageWrapper = styled.div`
   width: 100%;
   height: 190px;
   position: relative;
+
+  background-color: var(--c-beige);
 `
 
 const VehicleType = styled.div`
