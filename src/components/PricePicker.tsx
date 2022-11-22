@@ -7,6 +7,7 @@ import { Text } from './_LayoutComponents'
 import { useCaravansContext } from './_context/context'
 
 import { EPricePicker } from '../enums/price-picker.enum'
+import { EBreakpoint } from '../../styles/breakpoint.enum'
 
 export const PricePicker = () => {
   const { minPrice, maxPrice, setMinPrice, setMaxPrice } = useCaravansContext()
@@ -64,9 +65,9 @@ export const PricePicker = () => {
   )
 
   return (
-    <div>
+    <PickerWrapper>
       <Text>Cena za den</Text>
-      <Picker>
+      <RangeWrapper>
         <Range
           step={EPricePicker.RANGE_STEP}
           min={EPricePicker.MIN_VALUE}
@@ -83,7 +84,7 @@ export const PricePicker = () => {
           )}
           renderThumb={({ props }) => <div {...props} style={{ ...props.style, ...thumbStyles }} />}
         />
-      </Picker>
+      </RangeWrapper>
       <ManualValues>
         <InputWrapper htmlFor="min-price-input">
           <Input
@@ -108,13 +109,21 @@ export const PricePicker = () => {
           <Currency>Kč</Currency>
         </InputWrapper>
       </ManualValues>
-    </div>
+    </PickerWrapper>
   )
 }
 
+const PickerWrapper = styled.div`
+  flex: 1 1 auto;
+
+  @media (min-width: ${EBreakpoint.MOBILE}) {
+    max-width: 22rem;
+  }
+`
+
 // Vertical padding = (height of thumb / 2) + 1rem
 // Horizontal padding = thumb width / 2
-const Picker = styled.div`
+const RangeWrapper = styled.div`
   position: relative;
   width: 100%;
   padding: calc(var(--spacing-12) + var(--spacing-16)) var(--spacing-12);
@@ -122,7 +131,8 @@ const Picker = styled.div`
 `
 
 const ManualValues = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
   gap: 1rem;
 `
 
@@ -134,13 +144,13 @@ const InputWrapper = styled.label`
   gap: var(--spacing-16);
 
   padding: var(--spacing-12);
-  width: 10rem;
 
   border: 1px solid var(--c-beige);
   border-radius: var(--spacing-8);
 
   &:focus,
-  &:active {
+  &:active,
+  &:focus-within {
     border: 1px solid var(--c-green);
   }
 `

@@ -44,9 +44,11 @@ const Tile = styled.div<{ isActive: boolean }>`
   flex-direction: column;
   gap: var(--spacing-4);
 
-  border-radius: var(--spacing-8);
+  max-width: 10rem;
 
+  border-radius: var(--spacing-8);
   padding: var(--spacing-12);
+
   cursor: pointer;
 
   ${(props: { isActive: boolean }) => (props.isActive ? `outline: 2px solid var(--c-green)` : `outline: 1px solid var(--c-beige)`)}

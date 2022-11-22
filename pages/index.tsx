@@ -5,6 +5,7 @@ import { IndexHead, InstantBookablePicker, PricePicker, Tile, VehicleTypePicker,
 import { Container } from '../src/components/_LayoutComponents'
 import { getCaravansData } from '../src/utils/caravans-service'
 
+import { EBreakpoint } from '../styles/breakpoint.enum'
 import { EPricePicker } from '../src/enums/price-picker.enum'
 import { EInstantBookable } from '../src/enums/instant-bookable.enum'
 
@@ -36,18 +37,20 @@ const Home = ({ data: propsData, hasNextPage }: ICaravansData) => {
         </Container>
         <Container>
           {isDataLoading ? (
-            <Centered>Loading data...</Centered>
-          ) : (
+            <Centered>Filtruji...</Centered>
+          ) : caravans.length ? (
             <ResultsWrapper>
               {caravans.map((item: ICaravan) => {
                 const key: string = item.pictures[0] || `${item.name}-${item.location}-${item.price}`
                 return <Tile key={key} data={item}></Tile>
               })}
             </ResultsWrapper>
+          ) : (
+            <Centered>Vašemu vyhledávání neodpovídají žádné výsledky</Centered>
           )}
           {isError ? <Centered>Během načítání dat došlo k chybě</Centered> : null}
           {isPageLoading ? (
-            <Centered>Loading data</Centered>
+            <Centered>Vyhledávám další...</Centered>
           ) : isMoreResults ? (
             <ButtonWrapper>
               <Button onClick={handleNextPage}>Načíst další</Button>
@@ -87,6 +90,7 @@ export async function getStaticProps(): Promise<{ props: ICaravansData }> {
 }
 
 const ContentWrapper = styled.div`
+  overflow: hidden;
   & > * {
     border-top: 1px solid var(--c-beige);
   }
@@ -112,7 +116,11 @@ const ResultsWrapper = styled.section`
 `
 
 const Filters = styled.section`
-  display: flex;
+  @media (min-width: ${EBreakpoint.TABLETS}) {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+  }
 
   margin-left: calc(-1 * var(--spacing-16));
   margin-right: calc(-1 * var(--spacing-16));
@@ -142,11 +150,17 @@ const Button = styled.button`
   background-color: var(--c-green);
   color: var(--c-white);
   font-weight: var(--fw-bold);
+  cursor: pointer;
 
   padding: var(--spacing-12) var(--spacing-32);
 
   border-radius: var(--spacing-8);
   border: none;
   outline: none;
+
+  &:hover,
+  &:active {
+    opacity: 0.8;
+  }
 `
 export default Home

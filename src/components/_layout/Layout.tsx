@@ -28,6 +28,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
 const Wrapper = styled.div`
   min-height: 100vh;
+  margin-left: calc(100vw - 100%);
+  margin-right: 0;
 
   display: flex;
   flex-direction: column;

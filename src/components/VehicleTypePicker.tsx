@@ -9,22 +9,25 @@ const vehicleTypes: TVehicleType[] = ['Alcove', 'BuiltIn', 'Campervan', 'Intergr
 
 export const VehicleTypePicker = () => {
   return (
-    <div>
+    <Wrapper>
       <Text>Cena za den</Text>
 
-      <TypePickerWrapper>
+      <Picker>
         {vehicleTypes.map((type: TVehicleType): React.ReactElement => {
           return <VehiclePickerTile key={type} type={type} />
         })}
-      </TypePickerWrapper>
-    </div>
+      </Picker>
+    </Wrapper>
   )
 }
 
-const TypePickerWrapper = styled.div`
+const Wrapper = styled.div`
+  flex-grow: 1;
+`
+
+const Picker = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
-  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
   gap: var(--spacing-16);
   padding-top: var(--spacing-16);
 `

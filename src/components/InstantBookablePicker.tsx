@@ -7,6 +7,7 @@ import ActionIcon from '../../public/assets/Icon-Action.svg'
 import { useCaravansContext } from './_context/context'
 
 import { EInstantBookable } from '../enums/instant-bookable.enum'
+import { EBreakpoint } from '../../styles/breakpoint.enum'
 
 export interface IInstantBookable {
   value: EInstantBookable
@@ -39,7 +40,7 @@ export const InstantBookablePicker = () => {
   return (
     <Wrapper>
       <IconWithText>
-        <Text>Okamžitá rezervace</Text>
+        <BookableText>Okamžitá rezervace</BookableText>
         <Image width={20} height={20} src={ActionIcon} alt=""></Image>
       </IconWithText>
       <SelectWrapper>
@@ -70,8 +71,18 @@ export const InstantBookablePicker = () => {
 
 const Wrapper = styled.div`
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: var(--spacing-16);
+
+  @media (min-width: ${EBreakpoint.MOBILE}) {
+    max-width: fit-content;
+  }
+`
+
+const BookableText = styled(Text)`
+  width: auto;
+  white-space: normal;
 `
 
 const SelectWrapper = styled.div`
